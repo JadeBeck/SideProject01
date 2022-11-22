@@ -1,4 +1,4 @@
-# Portfolio For Junior Developer by. 백이현
+# Portfolio to become a Junior Backend Developer by. 백이현
 >(๑•̀ㅂ•́)و✧
 
 </br>
