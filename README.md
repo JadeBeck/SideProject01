@@ -1,5 +1,5 @@
-# 한정수 포트폴리오
->캐치 프레이즈
+# Portfolio For Junior Developer by. 백이현
+>(๑•̀ㅂ•́)و✧
 
 </br>
 
