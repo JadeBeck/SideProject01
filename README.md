@@ -1,2 +1,2 @@
 # Private Portfolio
- Using NodeJs, Express.JS, socket.io
+ Using NodeJs, Express.js, socket.io
