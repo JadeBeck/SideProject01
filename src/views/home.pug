@@ -4,7 +4,7 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Noom
+        title Zoom
         link(rel="stylesheet", href="https://unpkg.com/mvp.css")
     body
         header
@@ -26,4 +26,5 @@ html(lang="en")
                     input(placeholder="message", required, type="text")
                     button Send
         script(src="/socket.io/socket.io.js")
+            //소켓 통신을 이용하기 위해서 클라이언트 단에서는 /socket.io 경로로 이동하여 socket.io.js를 실행해야 함
     script(src="/public/js/app.js")
