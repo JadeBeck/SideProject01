@@ -1,2 +1,2 @@
 # Side Project 01
- Using TypeScript, NodeJs, Express.js, OAuth, socket.io
+ Using TypeScript, NodeJs, Express, OAuth, socket.io
