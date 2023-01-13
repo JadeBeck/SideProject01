@@ -1,2 +1,2 @@
-# Private Portfolio
- Using NodeJs, Express.js, socket.io
+# Side Project 01
+ Using TypeScript, NodeJs, Express.js, OAuth, socket.io
