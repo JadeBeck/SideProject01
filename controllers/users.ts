@@ -12,9 +12,7 @@ class usersController {
             const {userId, nickName, email, password, confirm}
                 : {userId: string, nickName: string, email: string, password: string, confirm: string}
                 = req.body;
-
             await this.usersService.signUp({userId, nickName, email, password, confirm});
-
             res.status(201).json({ok: true, statusCode: 201, message: "회원가입 성공!!"});
         } catch (err: any) {
             res.status(err.status || 400).json({ok: 0, statusCode: err.status, err: err.message})
@@ -68,7 +66,7 @@ class usersController {
             res.status(201).json({
                 accessToken: `Bearer ${accessToken}}`,
                 refresh_token: `Bearer ${refreshToken}`,
-                nickName: getNickName.nickName  //🔥
+                nickName: getNickName.nickName
             });
         } catch (err: any) {
             res.status(err.status || 400).json({
