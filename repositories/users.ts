@@ -23,7 +23,7 @@ class usersRepository {
     findUserAccountId = async(userId: string) => {
         const findUserAccountData = await Users.findOne({userId});
         return findUserAccountData;
-    } ;
+    };
 
     //유저 nickname 찾기
     findUserAccountNick = async(nickName: string) => {

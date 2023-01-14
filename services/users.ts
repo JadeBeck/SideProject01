@@ -68,7 +68,6 @@ class UserService {
         };
 
         const salt = await bcrypt.genSalt(11);
-        //반복 횟수를 늘려보자
         password = await bcrypt.hash(password, salt);
 
         //자 이제 진짜 가입
