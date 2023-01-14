@@ -1,5 +1,4 @@
-import express from "express";
-import { Router } from 'express'
+import { Router } from "express";
 const router = Router();
 
 import usersRouter from"./users.router";
@@ -18,4 +17,4 @@ router.use("/users", usersRouter);
 // router.use("/sms", smsRouter)
 // router.use("/rank", rankRouter);
 
-export default Router;
+export default router;

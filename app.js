@@ -8,9 +8,8 @@ const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 const http_1 = __importDefault(require("http"));
 const server = http_1.default.createServer(app);
+const generalErrorHandler_1 = __importDefault(require("./src/error/generalErrorHandler"));
 const routes_1 = __importDefault(require("./routes"));
-const socket = require('./socket');
-socket(server);
 const connect = require("./schema");
 connect();
 // app.use(helmet.frameguard());
@@ -29,7 +28,9 @@ app.use((0, cors_1.default)({
 //     swaggerUi.serve,
 //     swaggerUi.setup(swaggerFile, { explorer: true })
 // );
-app.get("/", routes_1.default);
+app.use(express_1.default.json());
+app.use("/", routes_1.default);
+app.use(generalErrorHandler_1.default);
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
     console.log(`${port}번 포트로 열렸습니다.`);

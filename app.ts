@@ -1,13 +1,14 @@
 import "dotenv/config";
 import helmet from "helmet";
-import express, { Request, Response, NextFunction } from "express";
-const app = express();
+import express, {Express} from "express";
+const app: Express = express();
 import http from "http";
-const server = http.createServer(app);
+const server = http.createServer(app)
+import generalErrorHandler from "./src/error/generalErrorHandler";
 import routes from "./routes";
 
-const socket = require('./socket')
-socket(server)
+// const socket = require('./socket')
+// socket(server)
 
 // const swaggerFile = require("./swagger-output");
 // const swaggerUi = require("swagger-ui-express");
@@ -34,7 +35,9 @@ import cors from "cors";
 //     swaggerUi.setup(swaggerFile, { explorer: true })
 // );
 
-app.get("/", routes);
+app.use(express.json());
+app.use("/", routes);
+app.use(generalErrorHandler);
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {

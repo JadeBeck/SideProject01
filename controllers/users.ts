@@ -7,7 +7,7 @@ class usersController {
     public usersService = new usersService();
 
     //회원가입
-    public signUp = async (req: Request, res: Response, next: NextFunction) => {
+    signUp = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const {userId, nickName, email, password, confirm}
                 : {userId: string, nickName: string, email: string, password: string, confirm: string}
@@ -17,7 +17,7 @@ class usersController {
 
             res.status(201).json({ok: true, statusCode: 201, message: "회원가입 성공!!"});
         } catch (err: any) {
-            res.status(err.status  || 400).json({ok: 0, statusCode: err.status, err: err.message})
+            res.status(err.status || 400).json({ok: 0, statusCode: err.status, err: err.message})
         };
     };
 
@@ -56,6 +56,9 @@ class usersController {
             };
             
             const getNickName = await this.usersService.getNickName(userId);
+            if (!getNickName) {
+                throw new Error();
+            }
             const accessToken  = await this.usersService.getAccessToken(userId);
             const refreshToken = await this.usersService.getRefreshToken();
 
@@ -65,7 +68,7 @@ class usersController {
             res.status(201).json({
                 accessToken: `Bearer ${accessToken}}`,
                 refresh_token: `Bearer ${refreshToken}`,
-                nickName: {getNickName}&&nickName  //🔥
+                nickName: getNickName.nickName  //🔥
             });
         } catch (err: any) {
             res.status(err.status || 400).json({
