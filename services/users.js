@@ -20,8 +20,8 @@ const users_1 = __importDefault(require("../repositories/users"));
 // import CommentsRepository from "../repositories/comments";
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const CHECK_ID = /^[a-zA-Z0-9]{4, 20}$/; // 4 ~ 15으로 변경
-const CHECK_PASSWORD = /^[a-zA-Z0-9]{4, 30}$/; // 8~15 으로 변경
+const CHECK_ID = /^[a-zA-Z0-9]{4, 20}$/;
+const CHECK_PASSWORD = /^[a-zA-Z0-9]{4, 30}$/;
 const DB_HOST = process.env.DB_HOST;
 const DB_SECRET_KEY = process.env.DB_SECRET_KEY;
 class UserService {
@@ -49,22 +49,21 @@ class UserService {
                 throw err;
             }
             ;
-            //아이디가 최소 9자리가 아닐 경우
-            if (!CHECK_ID.test(userId)) {
-                const err = new Error(`UserService Error`);
-                err.status = 403;
-                err.message = "아이디는 최소 4자리 이상으로 해주세요.";
-                throw err;
-            }
-            ;
-            //비밀번호 최소치가 맞지 않을 경우
-            if (!CHECK_PASSWORD.test(password)) {
-                const err = new Error(`UserService Error`);
-                err.status = 403;
-                err.message = "비밀번호는 최소 4자리 이상으로 해주세요.";
-                throw err;
-            }
-            ;
+            // //아이디가 최소 4자리가 아닐 경우
+            // if (!CHECK_ID.test(userId)) {
+            //     const err: Error = new Error(`UserService Error`);
+            //     err.status = 403;
+            //     err.message = "아이디는 최소 4자리 이상으로 해주세요.";
+            //     throw err;
+            // };
+            //
+            // //비밀번호가 최소 4자리가 아닐 경우
+            // if (!CHECK_PASSWORD.test(password)) {
+            //     const err: Error = new Error(`UserService Error`);
+            //     err.status = 403;
+            //     err.message = "비밀번호는 최소 4자리 이상으로 해주세요.";
+            //     throw err;
+            // };
             //비밀번호와 비밀번호 확인이 맞지 않을 경우
             if (password !== confirm) {
                 const err = new Error(`UserService Error`);
@@ -121,7 +120,7 @@ class UserService {
                 throw err;
             }
             ;
-            const checkPW = yield bcrypt_1.default.compare(password, { loginData } && password); //🔥
+            const checkPW = yield bcrypt_1.default.compare(password, loginData.password); //🔥
             if (!checkPW) {
                 const err = new Error(`UserService Error`);
                 err.status = 403;

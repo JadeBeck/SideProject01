@@ -19,4 +19,4 @@ router.use("/users", users_router_1.default);
 // router.use("/social", socialRouter);
 // router.use("/sms", smsRouter)
 // router.use("/rank", rankRouter);
-exports.default = express_1.Router;
+exports.default = router;

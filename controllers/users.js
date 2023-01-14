@@ -64,6 +64,9 @@ class usersController {
                 }
                 ;
                 const getNickName = yield this.usersService.getNickName(userId);
+                if (!getNickName) {
+                    throw new Error();
+                }
                 const accessToken = yield this.usersService.getAccessToken(userId);
                 const refreshToken = yield this.usersService.getRefreshToken();
                 //refreshToken DB에 업뎃
@@ -71,7 +74,7 @@ class usersController {
                 res.status(201).json({
                     accessToken: `Bearer ${accessToken}}`,
                     refresh_token: `Bearer ${refreshToken}`,
-                    nickName: { getNickName } && nickName //🔥
+                    nickName: getNickName.nickName //🔥
                 });
             }
             catch (err) {

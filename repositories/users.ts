@@ -2,7 +2,6 @@ import Users from "../schema/users"
 //import Posts from "../schema/posts"
 //import Comments from "../schema/comments"
 //import Bookmark from "../schema/bookmark"
-import { IUserInputDTO, userUniqueSearchInput } from "../interfaces/IUser";
 import moment from "moment"
 const date = moment().format('YYYY-MM-DD HH:mm:ss');
 
