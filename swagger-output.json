@@ -1,0 +1,185 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "SideProject01-APIs",
+    "description": "열심히 만든 API들이 잘 굴러갈까나?🤔",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "회원 가입 및 로그인API",
+      "description": ""
+    },
+    {
+      "name": "회원정보 관련API",
+      "description": ""
+    },
+    {
+      "name": "게시물API",
+      "description": ""
+    },
+    {
+      "name": "댓글API",
+      "description": ""
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "description": "any description..."
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/users/signUp": {
+      "post": {
+        "tags": [
+          "회원 가입 및 로그인API"
+        ],
+        "description": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "아이디"
+                },
+                "nickName": {
+                  "example": "닉네임"
+                },
+                "email": {
+                  "example": "이메일"
+                },
+                "password": {
+                  "example": "비밀번호"
+                },
+                "confirm": {
+                  "example": "비밀번호 확인"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "회원가입 완료했습니다."
+          },
+          "403": {
+            "description": "유효성 검사에 만족되지 않습니다."
+          },
+          "409": {
+            "description": "중복된 값이 존재합니다."
+          }
+        }
+      }
+    },
+    "/users/dup/id": {
+      "post": {
+        "tags": [
+          "회원 가입 및 로그인API"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "아이디"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "사용 가능한 아이디 입니다."
+          },
+          "403": {
+            "description": "이미 사용중인 아이디 입니다."
+          }
+        }
+      }
+    },
+    "/users/dup/nick": {
+      "post": {
+        "tags": [
+          "회원 가입 및 로그인API"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nickName": {
+                  "example": "닉네임"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "사용가능한 닉네임입니다."
+          },
+          "403": {
+            "description": "이미 사용중인 닉네임입니다."
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "회원 가입 및 로그인API"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "아이디"
+                },
+                "password": {
+                  "example": "비밀번호"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "로그인 완료했습니다."
+          },
+          "403": {
+            "description": "아이디, 비번이 제대로 만족되지 않습니다."
+          }
+        }
+      }
+    }
+  }
+  }
