@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { NextFunction, Request, Response } from "express";
-import usersService from "../services/users";
+import usersService from "../services/users.js";
 import jwt from "jsonwebtoken";
 
 class usersController {

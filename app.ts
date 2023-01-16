@@ -4,17 +4,18 @@ import express, {Express} from "express";
 const app: Express = express();
 import http from "http";
 const server = http.createServer(app)
-import generalErrorHandler from "./src/error/generalErrorHandler";
-import routes from "./routes";
+import generalErrorHandler from "./src/error/generalErrorHandler.js";
+import routes from "./routes/index.js";
 
 // const socket = require('./socket')
 // socket(server)
 
 import swaggerUi from "swagger-ui-express";
-const outputFile = require("./swagger-output");
+import outputFile from "./swagger-output.json" assert { type: "json"};
 
 import mongoose from "mongoose";
-const connect = require("./schema");
+import connect from "./schema/index.js"
+//const connect = require("./schema");
 connect();
 
 // app.use(helmet.frameguard());

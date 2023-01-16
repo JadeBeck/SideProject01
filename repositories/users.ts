@@ -1,4 +1,4 @@
-import Users from "../schema/users"
+import Users from "../schema/users.js"
 //import Posts from "../schema/posts"
 //import Comments from "../schema/comments"
 //import Bookmark from "../schema/bookmark"

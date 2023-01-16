@@ -15,4 +15,4 @@ mongoose.connection.on("error", err => {
     console.error("mongoDB connecting error", err);
 });
 
-module.exports = connect;
+export default connect;
