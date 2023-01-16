@@ -1,10 +1,10 @@
 import { Router } from "express";
 const router = Router();
 
-import UsersController from "../controllers/users";
+import UsersController from "../controllers/users.js";
 const usersController = new UsersController;
 
-import { auth_middleware } from  "../middleware/auth-middleware";
+import { auth_middleware } from  "../middleware/auth-middleware.js";
 
 //회원가입
 router.post("/signUp", usersController.signUp);

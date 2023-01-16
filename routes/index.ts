@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-import usersRouter from "./users.router";
+import usersRouter from "./users.router.js";
 // const postsRouter = require("./posts.router");
 // const commentsRouter = require("./comments.router");
 // const chatRouter = require("./chat.router");

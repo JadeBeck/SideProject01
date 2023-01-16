@@ -2,7 +2,7 @@ import "dotenv/config";
 import { Router } from 'express';
 const router = Router();
 import { Error } from "../interfaces/Error";
-import UsersRepository from "../repositories/users";
+import UsersRepository from "../repositories/users.js";
 // import PostsRepository from "../repositories/posts";
 // import CommentsRepository from "../repositories/comments";
 import jwt from "jsonwebtoken";
