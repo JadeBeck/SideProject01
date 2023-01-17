@@ -13,9 +13,7 @@ import routes from "./routes/index.js";
 import swaggerUi from "swagger-ui-express";
 import outputFile from "./swagger-output.json" assert { type: "json"};
 
-import mongoose from "mongoose";
 import connect from "./schema/index.js"
-//const connect = require("./schema");
 connect();
 
 // app.use(helmet.frameguard());

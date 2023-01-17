@@ -1,10 +1,10 @@
 import "dotenv/config";
 import { NextFunction, Request, Response } from "express";
-import usersService from "../services/users.js";
+import UsersService from "../services/users.js";
 import jwt from "jsonwebtoken";
 
 class usersController {
-    public usersService = new usersService();
+    public usersService = new UsersService();
 
     //회원가입
     signUp = async (req: Request, res: Response, next: NextFunction) => {
