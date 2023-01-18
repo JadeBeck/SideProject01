@@ -33,7 +33,7 @@ class UsersService {
             err.status = 409;
             err.message = "이미 가입된 아이디가 존재합니다.";
             throw err;
-        };
+        }
         
         //유저 nickname 중복 검사
         if (isSameNickname) {
@@ -41,7 +41,7 @@ class UsersService {
             err.status = 409;
             err.message = "이미 가입된 닉네임이 존재합니다.";
             throw err;
-        };
+        }
 
         // //아이디가 최소 4자리가 아닐 경우
         // if (!CHECK_ID.test(userId)) {
@@ -65,7 +65,7 @@ class UsersService {
             err.status = 403;
             err.message = "비밀번호와 확인 비밀번호가 일치하지 않습니다.";
             throw err;
-        };
+        }
 
         const salt = await bcrypt.genSalt(11);
         password = await bcrypt.hash(password, salt);
@@ -88,7 +88,7 @@ class UsersService {
             throw err;
         } else{
             return "사용 가능한 아이디입니다."
-        };
+        }
     };
 
     //유저 nickname 중복 검사
@@ -102,7 +102,7 @@ class UsersService {
             throw err;
         } else{
             return "사용 가능한 닉네임입니다."
-        };
+        }
     };
 
     //로그인
@@ -114,14 +114,14 @@ class UsersService {
             err.status = 403;
             err.message = "아이디를 확인해주세요.";
         throw err;
-    };
+    }
         const checkPW = await bcrypt.compare(password, loginData.password as string);  //🔥
         if (!checkPW) {
             const err: Error = new Error(`UserService Error`)
             err.status = 403;
             err.message = "패스워드를 확인해주세요.";
             throw err;
-        };
+        }
         //회원 맞으면 로그인 정보 반환
         return { loginData };
     };
@@ -153,6 +153,6 @@ class UsersService {
         return findUserAccountData;
     };
 
-};
+}
 
 export default UsersService;

@@ -16,7 +16,7 @@ class usersController {
             res.status(201).json({ok: true, statusCode: 201, message: "회원가입 성공!!"});
         } catch (err: any) {
             res.status(err.status || 400).json({ok: 0, statusCode: err.status, err: err.message})
-        };
+        }
     };
 
     //유저 id 중복 검사
@@ -73,9 +73,9 @@ class usersController {
                 ok: 0,  
                 statusCode: err.status, 
                 message: err.message || "로그인 실패.."});
-        };
+        }
     };
     
-};
+}
 
 export default usersController;
