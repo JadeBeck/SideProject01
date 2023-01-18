@@ -51,6 +51,6 @@ class usersRepository {
     return findUserAccountData;
     };
 
-};
+}
 
 export default usersRepository;
