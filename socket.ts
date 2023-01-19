@@ -2,7 +2,6 @@ import http from "http";
 import {Server} from "socket.io";
 
 import connect from "./schema/index.js"
-
 connect();
 
 import Rooms from "./schema/rooms.js";

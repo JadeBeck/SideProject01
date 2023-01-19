@@ -12,7 +12,7 @@ router.post("/", auth_middleware, postsController.createPost);
 //게시글 전부 보기
 router.get("/", postsController.findAllPosts);
 
-//게시글 하나 보기
+//게시글 하나 보기(게시글 상세 조회)
 router.get("/:postId", postsController.findOnePost);
 
 //게시글 수정

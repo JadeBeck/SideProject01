@@ -11,19 +11,23 @@ const doc = {
     produces: ["application/json"],
     tags: [
         {
-            name: "회원 가입 및 로그인API",
+            name: "회원가입 및 로그인 API",
             description: ""
         },
         {
-            name: "회원정보 관련API",
+            name: "회원정보 관련 API",
             description: ""
         },
         {
-            name: "게시물API",
+            name: "게시물 API",
             description: ""
         },
         {
-            name: "댓글API",
+            name: "댓글 API",
+            description: ""
+        },
+        {
+            name: "채팅 API",
             description: ""
         }
     ],

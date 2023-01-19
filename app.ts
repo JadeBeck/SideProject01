@@ -39,7 +39,7 @@ app.use(generalErrorHandler);
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-    console.log(`🛡${port}번 포트로 열렸습니다.`);
+    console.log(`🛡${port}번 포트로 열렸습니다.🛡`);
 });
 
 //app은 신체 & server는 신체 외부. app안에 주사를 놔주면 server는 문제 없이 돌아가는 느낌 !!

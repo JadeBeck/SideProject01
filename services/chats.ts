@@ -3,9 +3,9 @@ import ChatsRepository from "../repositories/chats.js";
 class ChatsService {
     public chatsRepository = new ChatsRepository();
 
-    updateSocket = async (room: string) => {
-        const updateSocketData = await this.chatsRepository.updateSocket(room);
-        return updateSocketData;
+    bringChats = async (room: string) => {
+        const bringChatsData = await this.chatsRepository.bringChats(room);
+        return bringChatsData;
     };
 }
 

@@ -1,9 +1,9 @@
 import Room from "../schema/rooms.js";
 
 class ChatsRepository {
-    updateSocket = async (room: string) => {
-        const updateSocket = await Room.findOne({room});
-        return updateSocket;
+    bringChats = async (room: string) => {
+        const bringChatsData = await Room.findOne({room});
+        return bringChatsData;
     };
 }
 

@@ -36,8 +36,8 @@ class PostsService {
             const findOnePosts = await this.postsRepository.findOnePost(postId);
             return findOnePosts;
         } catch(err: any){
-            err.status = 404
-            err.message = "게시물이 없습니다."
+            err.status = 404;
+            err.message = "게시물이 없습니다.";
             throw err;
         }
     };
@@ -50,7 +50,7 @@ class PostsService {
         if(!title || !content || !location || !date || !time || !map || !partySize){
             const err: Error = new Error('postService Error');
             err.status = 403;
-            err.message = "빈칸을 입력해주세요."
+            err.message = "빈칸을 입력해주세요.";
             throw err;
         }
         const findOnePost = await this.postsRepository.findOnePost(postId)
@@ -58,23 +58,23 @@ class PostsService {
             if (findOnePost._id.toString() !== postId) {
                 const err: Error = new Error('postService Error');
                 err.status = 404;
-                err.message = "게시물이 없습니다."
-                throw err
+                err.message = "게시물이 없습니다.";
+                throw err;
             }
         }
-        await this.postsRepository.updatePost(postId, userId, title, content, location, date, time, map, partySize)
-        return
+        await this.postsRepository.updatePost({postId, userId, title, content, location, date, time, map, partySize});
+        return;
     };
 
     //게시글 삭제
     deletePost = async(postId: string, userId: string) => {
         try {
             await this.postsRepository.deletePost(postId, userId);
-            return
+            return;
         } catch (err: any) {
             err.status = 404
             err.message = "경로 요청이 잘못되었습니다."
-            throw err
+            throw err;
         }
     };
 
