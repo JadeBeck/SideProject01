@@ -5,23 +5,11 @@ import Users from "../schema/users.js";
 class PostsRepository {
     //게시글 작성
     createPost = async (
-        {userId, nickName, img, title, content, location, date, time, map, partyMember, participant, nowToClose}
-            : { userId: string, nickName: string, img: string, title: string, content: string, location: string, date: string, time: [string, string], map: string, partyMember: number, participant: [], nowToClose: number }
+        {userId, nickName, img, title, content, location, date, time, map, partySize, participant, nowToClose}
+            : { userId: string, nickName: string, img: string, title: string, content: string, location: string, date: string, time: [string, string], map: string, partySize: number, participant: [], nowToClose: number }
     ) => {
         const createPost = await Posts.create({
-            userId,
-            img,
-            nickName,
-            title,
-            content,
-            location,
-            date,
-            time,
-            map,
-            partyMember,
-            participant,
-            confirmMember: nickName,
-            expireAt: nowToClose
+            userId, img, nickName, title, content, location, date, time, map, partySize, participant, confirmMember: nickName, expireAt: nowToClose
         });
         await Users.updateOne({userId}, {$inc: {point: 300, totalPoint: 300}})
         const UserAvatar = await Users.findOne({userId})
@@ -57,11 +45,11 @@ class PostsRepository {
 
     //게시글 수정
     updatePost = async (
-        {postId, userId, title, content, location, date, time, map, partyMember}
-            : { postId: string, userId: string, title: string, content: string, location: string, date: string, time: [string, string], map: string, partyMember: number }) => {
+        {postId, userId, title, content, location, date, time, map, partySize}
+            : { postId: string, userId: string, title: string, content: string, location: string, date: string, time: [string, string], map: string, partySize: number }) => {
         await Posts.updateOne(
             {_id: postId, userId: userId},
-            {$set: {title, content, location, date, time, map, partyMember}}
+            {$set: {title, content, location, date, time, map, partySize}}
         );
         return
     };

@@ -9,16 +9,16 @@ class PostsService {
 
     //게시글 작성
     createPost = async(
-        {userId, nickName, img, title, content, location, date, time, map, partyMember, participant, nowToClose}
-            : {userId: string, nickName: string, img:string, title: string, content: string, location: string, date: string, time: [string, string], map: string, partyMember: number, participant: [], nowToClose: number}
+        {userId, nickName, img, title, content, location, date, time, map, partySize, participant, nowToClose}
+            : {userId: string, nickName: string, img:string, title: string, content: string, location: string, date: string, time: [string, string], map: string, partySize: number, participant: [], nowToClose: number}
     ) => {
-        if (!title || !content || !location || !date || !time || !map || !partyMember){
+        if (!title || !content || !location || !date || !time || !map || !partySize){
             const err: Error = new Error('postService Error');
             err.status = 403;
             err.message = "빈칸을 입력해주세요."
             throw err;
         } else {
-            const createPosts = await this.postsRepository.createPost({userId, nickName, img, title, content, location, date, time, map, partyMember, participant, nowToClose
+            const createPosts = await this.postsRepository.createPost({userId, nickName, img, title, content, location, date, time, map, partySize, participant, nowToClose
                 });
             return createPosts
         }
@@ -33,7 +33,7 @@ class PostsService {
     //게시글 하나 보기
     findOnePost = async (postId: string) => {
         try{
-            const findOnePosts : string = await this.postsRepository.findOnePost(postId);
+            const findOnePosts = await this.postsRepository.findOnePost(postId);
             return findOnePosts;
         } catch(err: any){
             err.status = 404
@@ -44,23 +44,25 @@ class PostsService {
 
     //게시글 수정
     updatePost = async(
-        {postId, userId, title, content, location, date, time, map, partyMember}
-            : {postId: string, userId: string, title: string, content: string, location: string, date: string, time: [string, string], map: string, partyMember: number}
+        {postId, userId, title, content, location, date, time, map, partySize}
+            : {postId: string, userId: string, title: string, content: string, location: string, date: string, time: [string, string], map: string, partySize: number}
     ) => {
-        if(!title || !content || !location || !date || !time || !map || !partyMember){
+        if(!title || !content || !location || !date || !time || !map || !partySize){
             const err: Error = new Error('postService Error');
             err.status = 403;
             err.message = "빈칸을 입력해주세요."
             throw err;
         }
         const findOnePost = await this.postsRepository.findOnePost(postId)
-        if(findOnePost._id.toString() !== postId){
-            const err: Error = new Error('postService Error');
-            err.status = 404;
-            err.message = "게시물이 없습니다."
-            throw err
+        if (findOnePost) {
+            if (findOnePost._id.toString() !== postId) {
+                const err: Error = new Error('postService Error');
+                err.status = 404;
+                err.message = "게시물이 없습니다."
+                throw err
+            }
         }
-        await this.postsRepository.updatePost( postId, userId, title, content, location, date, time, map, partyMember)
+        await this.postsRepository.updatePost(postId, userId, title, content, location, date, time, map, partySize)
         return
     };
 

@@ -29,7 +29,7 @@ const PostsSchema = new Schema({
     map : {
         type : String
     },
-    partyMember : {
+    partySize : {
         type : Number
     },
     participant : {
