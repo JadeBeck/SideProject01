@@ -9,7 +9,7 @@ class postsController {
         try {
             const userId : string = res.locals.user.userId;
             const {nickName, img} : {nickName: string, img: string} = res.locals.user;
-            const {title, content, location, date, time, map, partyMember, participant} : {title: string, content: string, location: string, date: string, time: [string, string], map: string, partyMember: number, participant: []}= req.body;
+            const {title, content, location, date, time, map, partySize, participant} : {title: string, content: string, location: string, date: string, time: [string, string], map: string, partySize: number, participant: []}= req.body;
 
             const closingTime = time[1];
             const nowToClose : number = new Date(closingTime).getTime();  //마감시간 date화
@@ -17,7 +17,7 @@ class postsController {
             //console.log(closingTime)  //마감시간
             //console.log(nowToClose) //마감시간 date화
 
-            const createPost = await this.postsService.createPost(userId, nickName, img, title, content, location, date, time, map, partyMember, participant, nowToClose);
+            const createPost = await this.postsService.createPost(userId, nickName, img, title, content, location, date, time, map, partySize, participant, nowToClose);
             res.status(200).json({message: "게시물 생성 완료", createPost : createPost})
         } catch (err: any) {
             res.status(400).json({message: err.message})
@@ -47,8 +47,8 @@ class postsController {
         try {
             const postId = req.params.postId;
             const userId : string = res.locals.user.userId;
-            const {title, content, location, date, time, map, partyMember} : {title: string, content: string, location: string, date: string, time: [string, string], map: string, partyMember: number}= req.body
-            await this.postsService.updatePost(postId, userId, title, content, location, date, time, map, partyMember);
+            const {title, content, location, date, time, map, partySize} : {title: string, content: string, location: string, date: string, time: [string, string], map: string, partySize: number}= req.body
+            await this.postsService.updatePost(postId, userId, title, content, location, date, time, map, partySize);
             res.status(200).json({message: "게시물 수정을 완료하였습니다."})
         } catch (err: any) {
             res.status(err.status || 400).json({statusCode: err.status, message: err.message})
