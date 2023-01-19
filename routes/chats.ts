@@ -5,6 +5,6 @@ import ChatsController from "../controllers/chats.js";
 const chatsController = new ChatsController;
 
 //방에 있는 내용 불러오기
-router.get('/:room', chatsController.updateSocket);
+router.get('/:room', chatsController.bringChats);
 
 export default router;

@@ -17,7 +17,7 @@ class postsController {
             //console.log(closingTime)  //마감시간
             //console.log(nowToClose) //마감시간 date화
 
-            const createPost = await this.postsService.createPost(userId, nickName, img, title, content, location, date, time, map, partySize, participant, nowToClose);
+            const createPost = await this.postsService.createPost({userId, nickName, img, title, content, location, date, time, map, partySize, participant, nowToClose});
             res.status(200).json({message: "게시물 생성 완료", createPost : createPost})
         } catch (err: any) {
             res.status(400).json({message: err.message})
@@ -26,7 +26,7 @@ class postsController {
 
     //게시글 전부 보기
     findAllPosts = async (req: Request, res: Response, next: NextFunction) => {
-        const skip = req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0
+        const skip = req.query.skip && /^\d+$/.test(<string>req.query.skip) ? Number(req.query.skip) : 0
         const findAllPosts = await this.postsService.findAllPosts(skip);
         res.status(200).json({data: findAllPosts})
     };
@@ -48,7 +48,7 @@ class postsController {
             const postId = req.params.postId;
             const userId : string = res.locals.user.userId;
             const {title, content, location, date, time, map, partySize} : {title: string, content: string, location: string, date: string, time: [string, string], map: string, partySize: number}= req.body
-            await this.postsService.updatePost(postId, userId, title, content, location, date, time, map, partySize);
+            await this.postsService.updatePost({postId, userId, title, content, location, date, time, map, partySize});
             res.status(200).json({message: "게시물 수정을 완료하였습니다."})
         } catch (err: any) {
             res.status(err.status || 400).json({statusCode: err.status, message: err.message})

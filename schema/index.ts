@@ -7,7 +7,7 @@ const DB_HOST: string = process.env.DB_HOST as string;
 const connect = () => {
     mongoose
         .connect(DB_HOST)
-        .then(() => console.log("mongoDB Connected"))
+        .then(() => console.log("mongoDB Connected(1st app ⇨ 2nd socket)"))
         .catch(err => console.log(err));
 };
 

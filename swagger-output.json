@@ -9,19 +9,23 @@
   "basePath": "/",
   "tags": [
     {
-      "name": "회원 가입 및 로그인API",
+      "name": "회원가입 및 로그인 API",
       "description": ""
     },
     {
-      "name": "회원정보 관련API",
+      "name": "회원정보 관련 API",
       "description": ""
     },
     {
-      "name": "게시물API",
+      "name": "게시물 API",
       "description": ""
     },
     {
-      "name": "댓글API",
+      "name": "댓글 API",
+      "description": ""
+    },
+    {
+      "name": "채팅 API",
       "description": ""
     }
   ],
@@ -46,7 +50,7 @@
     "/users/signUp": {
       "post": {
         "tags": [
-          "회원 가입 및 로그인API"
+          "회원가입 및 로그인 API"
         ],
         "description": [],
         "parameters": [
@@ -91,7 +95,7 @@
     "/users/dup/id": {
       "post": {
         "tags": [
-          "회원 가입 및 로그인API"
+          "회원가입 및 로그인 API"
         ],
         "description": "",
         "parameters": [
@@ -121,7 +125,7 @@
     "/users/dup/nick": {
       "post": {
         "tags": [
-          "회원 가입 및 로그인API"
+          "회원가입 및 로그인 API"
         ],
         "description": "",
         "parameters": [
@@ -151,7 +155,7 @@
     "/users/login": {
       "post": {
         "tags": [
-          "회원 가입 및 로그인API"
+          "회원가입 및 로그인 API"
         ],
         "description": "",
         "parameters": [
@@ -180,6 +184,213 @@
           }
         }
       }
+    },
+    "/posts": {
+      "post": {
+        "tags": [
+          "게시물 API"
+        ],
+        "description": "게시물 생성",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "보드게임 괴고수 모집합니다"
+                },
+                "content": {
+                  "example": "할리갈리할리갈리"
+                },
+                "location": {
+                  "example": "서울시"
+                },
+                "date": {
+                  "example": "2022년 11월 4일"
+                },
+                "time": {
+                  "example": "새벽3시"
+                },
+                "map": {
+                  "example": "지도 위치"
+                },
+                "partySize": {
+                  "example": 4
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "게시물 생성 완료"
+          },
+          "400": {
+            "description": "정확한 양식으로 작성해주세요"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "게시물 API"
+        ],
+        "description": "게시물 전체 조회",
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "게시물 조회 완료"
+          },
+          "400": {
+            "description": "정확한 경로가 아닙니다."
+          }
+        }
+      }
+    },
+    "/posts/{postId}": {
+      "get": {
+        "tags": [
+          "게시물 API"
+        ],
+        "description": "게시물 상세 조회",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "게시물 조회 완료"
+          },
+          "400": {
+            "description": "없는 게시물입니다."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "게시물 API"
+        ],
+        "description": "게시물 수정",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "타이틀 수정"
+                },
+                "content": {
+                  "example": "내용 수정"
+                },
+                "location": {
+                  "example": "지역 수정"
+                },
+                "date": {
+                  "example": "날짜 수정"
+                },
+                "time": {
+                  "example": "시간 수정"
+                },
+                "map": {
+                  "example": "위치 수정"
+                },
+                "partySize": {
+                  "example": 2
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "게시물 수정 완료"
+          },
+          "400": {
+            "description": "없는 게시물입니다."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "게시물 API"
+        ],
+        "description": "게시물 삭제",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "게시물 삭제 완료"
+          },
+          "400": {
+            "description": "없는 게시물입니다."
+          }
+        }
+      }
+    },
+    "/chats/{room}": {
+      "get": {
+        "tags": [
+          "채팅 API"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "room",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
     }
   }
-  }
+}

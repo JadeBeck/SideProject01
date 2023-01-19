@@ -1,7 +1,7 @@
 import "dotenv/config";
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
-const Users = require("../schema/users");
+import Users from "../schema/users.js"
 
 const  DB_HOST: string = process.env.DB_HOST as string;
 const DB_SECRET_KEY: string = process.env.DB_SECRET_KEY as string;
