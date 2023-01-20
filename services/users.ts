@@ -1,7 +1,5 @@
 import "dotenv/config";
-import { Router } from 'express';
-const router = Router();
-import { Error } from "../interfaces/Error";
+import {Error} from "../interfaces/Error";
 import UsersRepository from "../repositories/users.js";
 // import PostsRepository from "../repositories/posts";
 // import CommentsRepository from "../repositories/comments";
@@ -11,22 +9,21 @@ import bcrypt from "bcrypt";
 const CHECK_ID = /^[a-zA-Z0-9]{4, 20}$/;
 const CHECK_PASSWORD = /^[a-zA-Z0-9]{4, 30}$/;
 
-const  DB_HOST: string = process.env.DB_HOST as string;
-const DB_SECRET_KEY: string = process.env.DB_SECRET_KEY as string;
+const JWT_SECRET_KEY: string = process.env.JWT_SECRET_KEY as string;
 
 class UsersService {
     usersRepository = new UsersRepository();
     // postsRepository = new PostsRepository();
     // commentsRepository = new CommentsRepository();
-    
+
     //회원가입
     signUp = async (
         {userId, nickName, email, password, confirm}
-                        : {userId: string, nickName: string, email: string, password: string, confirm: string}
+            : { userId: string, nickName: string, email: string, password: string, confirm: string }
     ) => {
         const isSameId = await this.usersRepository.findUserAccountId(userId);
         const isSameNickname = await this.usersRepository.findUserAccountNick(nickName);
-        
+
         //유저 id 중복 검사
         if (isSameId) {
             const err: Error = new Error(`UserService Error`);
@@ -34,7 +31,7 @@ class UsersService {
             err.message = "이미 가입된 아이디가 존재합니다.";
             throw err;
         }
-        
+
         //유저 nickname 중복 검사
         if (isSameNickname) {
             const err: Error = new Error(`UserService Error`);
@@ -78,7 +75,7 @@ class UsersService {
     };
 
     //유저 id 중복 검사
-    findDupId = async(userId: string) => {
+    findDupId = async (userId: string) => {
         const findDupId = await this.usersRepository.findUserAccountId(userId);
 
         if (findDupId) {
@@ -86,13 +83,13 @@ class UsersService {
             err.status = 409;
             err.message = "이미 가입된 아이디가 존재합니다.";
             throw err;
-        } else{
+        } else {
             return "사용 가능한 아이디입니다."
         }
     };
 
     //유저 nickname 중복 검사
-    findDupNick = async(nickName: string) => {
+    findDupNick = async (nickName: string) => {
         const findDupNick = await this.usersRepository.findUserAccountNick(nickName);
 
         if (findDupNick) {
@@ -100,7 +97,7 @@ class UsersService {
             err.status = 409;
             err.message = "이미 가입된 닉네임이 존재합니다.";
             throw err;
-        } else{
+        } else {
             return "사용 가능한 닉네임입니다."
         }
     };
@@ -113,8 +110,8 @@ class UsersService {
             const err: Error = new Error(`UserService Error`)
             err.status = 403;
             err.message = "아이디를 확인해주세요.";
-        throw err;
-    }
+            throw err;
+        }
         const checkPW = await bcrypt.compare(password, loginData.password as string);  //🔥
         if (!checkPW) {
             const err: Error = new Error(`UserService Error`)
@@ -123,9 +120,9 @@ class UsersService {
             throw err;
         }
         //회원 맞으면 로그인 정보 반환
-        return { loginData };
+        return {loginData};
     };
-    
+
     //nickName 불러오기 by userId
     getNickName = async (userId: string) => {
         const getNickNameData = await this.usersRepository.findUserAccount(userId);
@@ -134,21 +131,20 @@ class UsersService {
 
     //accessToken 생성
     getAccessToken = async (userId: string) => {
-        const accessToken = jwt.sign({userId}, DB_HOST, {expiresIn: "5m"});
-    return accessToken;
+        const accessToken = jwt.sign({userId}, JWT_SECRET_KEY, {expiresIn: "1d"});
+        return accessToken;
     };
 
     //refreshToken 생성
     getRefreshToken = async () => {
-        const refreshToken = jwt.sign({}, DB_SECRET_KEY, {expiresIn: "1d"});
+        const refreshToken = jwt.sign({}, JWT_SECRET_KEY, {expiresIn: "30d"});
         return refreshToken;
     };
-    
+
     //refreshToken DB에 업뎃
     updateRefreshToken = async (userId: string, refreshToken: string) => {
         console.log(refreshToken);
         await this.usersRepository.updateRefreshToken(userId, refreshToken);
-        
         const findUserAccountData = await this.usersRepository.findUserAccount(userId);
         return findUserAccountData;
     };

@@ -23,10 +23,6 @@ const doc = {
             description: ""
         },
         {
-            name: "댓글 API",
-            description: ""
-        },
-        {
             name: "채팅 API",
             description: ""
         }
