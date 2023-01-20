@@ -6,8 +6,9 @@ import UsersRepository from "../repositories/users.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-const CHECK_ID = /^[a-zA-Z0-9]{4, 20}$/;
-const CHECK_PASSWORD = /^[a-zA-Z0-9]{4, 30}$/;
+const CHECK_ID = new RegExp(/^[a-zA-Z0-9]{4,12}$/);
+const CHECK_PASSWORD = new RegExp(/^[a-zA-Z0-9]{4,20}$/);
+const CHECK_EMAIL = new RegExp(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i);
 
 const JWT_SECRET_KEY: string = process.env.JWT_SECRET_KEY as string;
 
@@ -40,27 +41,35 @@ class UsersService {
             throw err;
         }
 
-        // //아이디가 최소 4자리가 아닐 경우
-        // if (!CHECK_ID.test(userId)) {
-        //     const err: Error = new Error(`UserService Error`);
-        //     err.status = 403;
-        //     err.message = "아이디는 최소 4자리 이상으로 해주세요.";
-        //     throw err;
-        // };
-        //
-        // //비밀번호가 최소 4자리가 아닐 경우
-        // if (!CHECK_PASSWORD.test(password)) {
-        //     const err: Error = new Error(`UserService Error`);
-        //     err.status = 403;
-        //     err.message = "비밀번호는 최소 4자리 이상으로 해주세요.";
-        //     throw err;
-        // };
+        //아이디가 최소 4자리가 아닐 경우
+        if (!CHECK_ID.test(userId)) {
+            const err: Error = new Error(`UserService Error`);
+            err.status = 403;
+            err.message = "아이디는 최소 4자리 이상으로 해주세요.";
+            throw err;
+        }
+
+        //비밀번호가 최소 4자리가 아닐 경우
+        if (!CHECK_PASSWORD.test(password)) {
+            const err: Error = new Error(`UserService Error`);
+            err.status = 403;
+            err.message = "비밀번호는 최소 4자리 이상으로 해주세요.";
+            throw err;
+        }
+
+        //올바른 이메일 형식이 아닐 경우
+        if (!CHECK_EMAIL.test(email)) {
+            const err: Error = new Error(`UserService Error`);
+            err.status = 403;
+            err.message = "이메일 형식이 올바르지 않습니다.";
+            throw err;
+        }
 
         //비밀번호와 비밀번호 확인이 맞지 않을 경우
         if (password !== confirm) {
             const err: Error = new Error(`UserService Error`);
             err.status = 403;
-            err.message = "비밀번호와 확인 비밀번호가 일치하지 않습니다.";
+            err.message = "비밀번호와 비밀번호 확인이 일치하지 않습니다.";
             throw err;
         }
 
