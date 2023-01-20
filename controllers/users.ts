@@ -1,7 +1,6 @@
 import "dotenv/config";
 import { NextFunction, Request, Response } from "express";
 import UsersService from "../services/users.js";
-import jwt from "jsonwebtoken";
 
 class usersController {
     public usersService = new UsersService();
@@ -51,7 +50,7 @@ class usersController {
             
             if (login === null) {
                 return res.status(404).send({ok: 0, statusCode: 404, errorMessage: "가입 정보를 찾을 수 없습니다."});
-            };
+            }
             
             const getNickName = await this.usersService.getNickName(userId);
             if (!getNickName) {
@@ -64,7 +63,7 @@ class usersController {
             await this.usersService.updateRefreshToken(userId, refreshToken);
 
             res.status(201).json({
-                accessToken: `Bearer ${accessToken}}`,
+                accessToken: `Bearer ${accessToken}`,
                 refresh_token: `Bearer ${refreshToken}`,
                 nickName: getNickName.nickName
             });
