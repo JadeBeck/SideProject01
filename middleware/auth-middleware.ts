@@ -43,9 +43,9 @@ export const auth_middleware = async (req: Request, res: Response, next: NextFun
     }
 };
 
-function verifyToken(token: string) {
+export function verifyToken(token: string) {
     try {
-        return jwt.verify(token, JWT_SECRET_KEY);
+        return jwt.verify(token, JWT_SECRET_KEY) as JwtPayload;
     } catch (err: any) {
         return err.message;
     }
