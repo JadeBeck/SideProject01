@@ -1,10 +1,10 @@
 import { Router } from "express";
 const router = Router();
 
+import { auth_middleware } from  "../middleware/auth-middleware.js";
+
 import PostsController from "../controllers/posts.js";
 const postsController = new PostsController;
-
-import { auth_middleware } from  "../middleware/auth-middleware.js";
 
 //게시글 작성
 router.post("/", auth_middleware, postsController.createPost);
