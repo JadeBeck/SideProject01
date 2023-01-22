@@ -1,8 +1,7 @@
 import "dotenv/config";
 import {Error} from "../interfaces/Error";
 import UsersRepository from "../repositories/users.js";
-// import PostsRepository from "../repositories/posts";
-// import CommentsRepository from "../repositories/comments";
+ import PostsRepository from "../repositories/posts.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
@@ -14,15 +13,14 @@ const JWT_SECRET_KEY: string = process.env.JWT_SECRET_KEY as string;
 
 class UsersService {
     usersRepository = new UsersRepository();
-    // postsRepository = new PostsRepository();
-    // commentsRepository = new CommentsRepository();
+    postsRepository = new PostsRepository();
 
     //회원가입
     signUp = async (
         {userId, nickName, email, password, confirm}
             : { userId: string, nickName: string, email: string, password: string, confirm: string }
     ) => {
-        const isSameId = await this.usersRepository.findUserAccountId(userId);
+        const isSameId = await this.usersRepository.findUserDataByUserId(userId);
         const isSameNickname = await this.usersRepository.findUserAccountNick(nickName);
 
         //유저 id 중복 검사
@@ -85,7 +83,7 @@ class UsersService {
 
     //유저 id 중복 검사
     findDupId = async (userId: string) => {
-        const findDupId = await this.usersRepository.findUserAccountId(userId);
+        const findDupId = await this.usersRepository.findUserDataByUserId(userId);
 
         if (findDupId) {
             const err: Error = new Error(`UserService Error`);
@@ -134,7 +132,7 @@ class UsersService {
 
     //nickName 불러오기 by userId
     getNickName = async (userId: string) => {
-        const getNickNameData = await this.usersRepository.findUserAccount(userId);
+        const getNickNameData = await this.usersRepository.findUserDataByUserId(userId);
         return getNickNameData;
     };
 
@@ -154,8 +152,75 @@ class UsersService {
     updateRefreshToken = async (userId: string, refreshToken: string) => {
         console.log(refreshToken);
         await this.usersRepository.updateRefreshToken(userId, refreshToken);
-        const findUserAccountData = await this.usersRepository.findUserAccount(userId);
+        const findUserAccountData = await this.usersRepository.findUserDataByUserId(userId);
         return findUserAccountData;
+    };
+
+    //refreshToken으로 유저 정보 찾아오기
+    ckUserDataByRT = async (refreshTokenValue: string) => {
+        const ckUserDataByRT = await this.usersRepository.ckUserDataByRT(refreshTokenValue);
+        return ckUserDataByRT;
+    };
+
+    //내 정보 확인하기
+    getUserData = async (userId: string) => {
+        const findUserData = await this.usersRepository.getUserData(userId);
+        const findBookmarkData = await this.postsRepository.findPostByPostId(findUserData.bookmark);
+        const bookmarkMappedData = findBookmarkData.map((postInfo) => {
+            return {
+                postId: postInfo._id,
+                title: postInfo.title,
+                closed: postInfo.closed,
+            };
+        });
+
+        if (findUserData) {
+            findUserData["bookmarkData"] = bookmarkMappedData;
+        }
+        return findUserData;
+    };
+
+    //내 정보 수정하기
+    updateUserData = async (userId: string, nickName: string, email: string) => {
+        const findUserDataByUserId = await this.usersRepository.findUserDataByUserId(userId);
+        if (findUserDataByUserId) {
+            if (nickName === findUserDataByUserId.nickName) {
+                const err: Error = new Error(`UserService Error`);
+                err.status = 403;
+                err.message = "이미 중복된 아이디가 존재합니다.";
+                throw err;
+            }
+
+            if (nickName == "") {
+                nickName = findUserDataByUserId.nickName;
+            }
+
+            if (email == "") {
+                email = findUserDataByUserId.myPlace;
+            }
+        }
+        const updateUserData = await this.usersRepository.updateUserData(userId, nickName, email);
+        return updateUserData;
+    };
+
+    //비밀번호 변경하기
+    changePW = async (userId: string, password: string) => {
+        const salt = await bcrypt.genSalt(11);
+        password = await bcrypt.hash(password, salt);
+        const changePW = await this.usersRepository.changePW(userId, password);
+        return changePW;
+    };
+
+    //회원 탈퇴하기
+    deleteUserData = async (nickName: string) => {
+        const deleteUserData = await this.usersRepository.deleteUserData(nickName);
+        return deleteUserData;
+    };
+
+    //다른 유저 정보 보기
+    getOtherUserData = async (nickName: string) => {
+        const getOtherUserData = await this.usersRepository.getOtherUserData(nickName);
+        return getOtherUserData;
     };
 
 }
