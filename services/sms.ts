@@ -2,7 +2,7 @@ import "dotenv/config";
 import * as axios from "axios";
 import CryptoJS from "crypto-js";
 const Cache = require('memory-cache');
-import SmsRepository from "../repositories/sms";
+import SmsRepository from "../repositories/sms.js";
 import {Error} from "../interfaces/Error";
 
 const SENS_SERVICE_ID: string = process.env.SENS_SERVICE_ID as string;
