@@ -1,24 +1,24 @@
 import Users from "../schema/users";
 
 class RanksRepository {
-    getRanks = async() => {
+    getRanks = async () => {
         let count = 1;
-        let result = [];
+        let result: { nickName: string | undefined; userAvatar: [] | undefined; totalPoint: number | null; rank: number | undefined; }[] = [];
         const getRanks = await Users.find({}).sort("-totalPoint")  //앞뒤로 쌍따옴표 맞음?
-        for(let i = 0; i<getRanks.length; i++){
+        for (let i = 0; i < getRanks.length; i++) {
             getRanks[i].rank = count++
         }
-        getRanks.map((p) => result.push({
-                nickName: p.nickName,
-                userAvatar : p.userAvatar,
-                totalPoint: p.totalPoint,
-                rank: p.rank
+        getRanks.map((user) => result.push({
+                nickName: user.nickName,
+                userAvatar: user.userAvatar,
+                totalPoint: user.totalPoint,
+                rank: user.rank
             })
         );
         return result
     };
 
-    getMyPoint = async(nickName: string) => {
+    getMyPoint = async (nickName: string) => {
         const findUserByNickName = await Users.findOne({nickName: nickName});
         if (findUserByNickName) {
             const result = {

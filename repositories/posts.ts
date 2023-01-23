@@ -136,6 +136,12 @@ class PostsRepository {
         return findPostByPostIdData;
     };
 
+    //참여 확정된 모임 조회(채팅중인 모임 조회)
+    partyGoData = async (nickName: string) => {
+        const partyGoData = await Posts.find({confirmMember: nickName}).sort('date');
+        return partyGoData;
+    };
+
 }
 
 export default PostsRepository;

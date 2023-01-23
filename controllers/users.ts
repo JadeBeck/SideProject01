@@ -111,13 +111,9 @@ class usersController {
         const {userId, nickName}: {userId: string, nickName: string} = res.locals.user;
         const getUserData = await this.usersService.getUserData(userId);
 
-        //참여 예약한 모임
-        const partyReserved = await this.usersService.partyReservedData(nickName);
-
-        //참여 확정된 모임
+        //참여 확정된 모임(채팅중인 모임)
         const partyGo = await this.usersService.partyGoData(nickName);
-
-        res.status(200).json({getUserData, partyReserved, partyGo});
+        res.status(200).json({getUserData, partyGo});
     };
 
     //내 정보 수정하기
@@ -157,13 +153,10 @@ class usersController {
         const nickName: string = req.params.nickName;
         const lookOtherUser = await this.usersService.getOtherUserData(nickName);
 
-        //참여 예약한 모임
-        const partyReserved = await this.usersService.partyReservedData(nickName);
-
-        //참여 확정된 모임
+        //참여 확정된 모임(채팅중인 모임)
         const partyGo = await this.usersService.partyGoData(nickName);
 
-        res.status(200).json({lookOtherUser: lookOtherUser, partyReserved, partyGo});
+        res.status(200).json({lookOtherUser: lookOtherUser, partyGo});
     };
 
 }
