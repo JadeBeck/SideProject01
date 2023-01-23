@@ -1,8 +1,6 @@
 import PostsRepository from "../repositories/posts.js";
 import {Error} from "../interfaces/Error";
-
 import shuffle_array from "shuffle-array";
-import {NextFunction, Request, Response} from "express";
 
 class PostsService {
     public postsRepository = new PostsRepository();
@@ -147,14 +145,14 @@ class PostsService {
 
         const bookmarkMappedData = findMyBookmark.map((post) => post.postId);
         for (let i = 0; i < bookmarkMappedData.length; i++){
-            const findPostByPostId = await this.postsRepository.findPostByPostId(bookmarkMappedData[i]);
+            const findPostByPostId = await this.postsRepository.findPostByPostId(bookmarkMappedData[i].toString());
             if(findPostByPostId.length === 0) {
                 const err: Error = new Error('postsService Error');
                 err.status = 200;
                 err.message = "등록된 게시물이 없습니다.";
                 throw err;
-            } else if(findPostByPostId.length !== 0){
-                result.push(findPostByPostId);
+            } else if (findPostByPostId.length !== 0){
+                result.push(findPostByPostId.toString());
             }
         }
         return result;

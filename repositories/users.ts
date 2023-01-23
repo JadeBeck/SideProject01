@@ -1,7 +1,7 @@
-import Users from "../schema/users.js"
-import Posts from "../schema/posts.js"
-import Bookmarks from "../schema/bookmarks.js"
-import moment from "moment"
+import Users from "../schema/users.js";
+import Posts from "../schema/posts.js";
+import Bookmarks from "../schema/bookmarks.js";
+import moment from "moment";
 
 const date = moment().format('YYYY-MM-DD HH:mm:ss');
 

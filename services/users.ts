@@ -1,7 +1,7 @@
 import "dotenv/config";
 import {Error} from "../interfaces/Error";
 import UsersRepository from "../repositories/users.js";
- import PostsRepository from "../repositories/posts.js";
+import PostsRepository from "../repositories/posts.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
@@ -165,19 +165,24 @@ class UsersService {
     //내 정보 확인하기
     getUserData = async (userId: string) => {
         const findUserData = await this.usersRepository.getUserData(userId);
-        const findBookmarkData = await this.postsRepository.findPostByPostId(findUserData.bookmark);
-        const bookmarkMappedData = findBookmarkData.map((postInfo) => {
-            return {
-                postId: postInfo._id,
-                title: postInfo.title,
-                closed: postInfo.closed,
-            };
-        });
-
         if (findUserData) {
+            const findBookmarkData = await this.postsRepository.findPostByPostId(findUserData.bookmark.toString());  //이렇게 하는게 맞나.....?
+            const bookmarkMappedData = findBookmarkData.map((postInfo) => {
+                return {
+                    postId: postInfo._id,
+                    title: postInfo.title,
+                    closed: postInfo.closed,
+                };
+            });
             findUserData["bookmarkData"] = bookmarkMappedData;
         }
         return findUserData;
+    };
+
+    //참여 확정된 모임(채팅중인 모임)
+    partyGoData = async (nickName: string) => {
+        const partyGoData = await this.postsRepository.partyGoData(nickName);
+        return partyGoData;
     };
 
     //내 정보 수정하기
@@ -187,16 +192,16 @@ class UsersService {
             if (nickName === findUserDataByUserId.nickName) {
                 const err: Error = new Error(`UserService Error`);
                 err.status = 403;
-                err.message = "이미 중복된 아이디가 존재합니다.";
+                err.message = "이미 중복된 닉네임이 존재합니다.";
                 throw err;
             }
 
-            if (nickName == "") {
-                nickName = findUserDataByUserId.nickName;
+            if (nickName == "" &&  findUserDataByUserId.nickName) {
+                nickName = findUserDataByUserId.nickName.toString();
             }
 
-            if (email == "") {
-                email = findUserDataByUserId.myPlace;
+            if (email == "" &&  findUserDataByUserId.email) {
+                email = findUserDataByUserId.emai.toString();
             }
         }
         const updateUserData = await this.usersRepository.updateUserData(userId, nickName, email);
