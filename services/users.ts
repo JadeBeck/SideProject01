@@ -201,7 +201,7 @@ class UsersService {
             }
 
             if (email == "" &&  findUserDataByUserId.email) {
-                email = findUserDataByUserId.emai.toString();
+                email = findUserDataByUserId.email;
             }
         }
         const updateUserData = await this.usersRepository.updateUserData(userId, nickName, email);

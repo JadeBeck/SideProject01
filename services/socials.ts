@@ -17,7 +17,7 @@ class SocialService {
 
     //카카오 소셜로그인
     isKakao = async (code: any) => {
-        const {data} = await axios.post(
+        const { data } = await axios.post(
             `https://kauth.kakao.com/oauth/token?grant_type=${KAKAO_GRANT_TYPE}&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URL}&code=${code}`,
             {
                 headers: {

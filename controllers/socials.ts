@@ -14,7 +14,7 @@ class SoicalController {
     //카카오 소셜로그인
     isKakao = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            // 프론에게 인가코드 받기
+            //프론에게 인가코드 받기
             const { code } = req.body;
             console.log('인가 코드' + code);
             try {

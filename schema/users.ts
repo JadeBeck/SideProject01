@@ -12,17 +12,11 @@ const UserSchema = new Schema({
     password: {
         type: String,
     },
-    phoneNumber : {
+    email : {
         type : String,
     },
     myPlace: {
         type: Array,
-    },
-    age: {
-        type: String,
-    },
-    gender: {
-        type: String,
     },
     visible : {
         type : String,
