@@ -1,4 +1,4 @@
-import Users from "../schema/users";
+import Users from "../schema/users.js";
 
 class RanksRepository {
     getRanks = async () => {
